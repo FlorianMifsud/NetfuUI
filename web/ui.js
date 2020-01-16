@@ -18,7 +18,7 @@ $(document).ready(function () {
         $("#botPanel").hide();
         $(".account").removeClass('selected');
         $("#addAccountPanel").show("100");
-      
+        
     });
 
 
@@ -46,14 +46,14 @@ $(document).ready(function () {
         $(this).parent().find('input[type=checkbox]').click();
     });
 
-  
+    
 
     $("#copieToGroupe").click(function () {
         NetfuLauncher.setDeleteItemGroup(currentAccount);
     });
 
     $("#tab-compte").click(function () {
-  
+      
         if ($("#serveurModAcc option").length == 0)
         {
             for (var i = 0; i < serveurs.length; i++) {
@@ -73,7 +73,7 @@ $(document).ready(function () {
         $("#numPersoModAcc").val(bot().config.numeroPerso);
         $("#mitmModAcc").prop("checked",bot().config.mitm);
 
-   
+        
     });
 
     $("#tab-metier").click(function () {
@@ -86,10 +86,10 @@ $(document).ready(function () {
         for (var i = 0; i < inputs.length; i++)
         {
             if ($(inputs[i]).val() == null || $(inputs[i]).val() == "") {
-   
+             
                 $(inputs[i]).attr('style', 'border: 1px solid #dc3545');
                 setTimeout(function () {
- 
+                   
                     $("#modifAccountPanel input").attr('style', '');
                 }, 2000);
                 checkControl = false;
@@ -161,23 +161,23 @@ $(document).ready(function () {
             var bot = accounts[i];
             if(bot != null && bot.monNom.length>0){
                 html += "<div style='margin-bottom:15px' class='botGroup'>";
-                    html += "<name style='margin-right: 15px;'>"+bot.monNom+"</name>";
-                    html += "<select  idDofus='" + bot.monIdDofus + "' onchange='setChef(this)' class='selectChef'>";
-                    html += "<option value='-1'>Pas de chef</option>";
-                    for (var j = 0; j < accounts.length; j++) {
-                        var chef = accounts[j];
-                        if (chef.monNom.length > 0 && chef.monNom != bot.monNom) {
-                            var selected = chef.monNom==bot.nomChef && chef.monNom.length>0?"selected":"";
-                            html += "<option " + selected + "  value='" + chef.monIdDofus + "'>" + chef.monNom + "</option>";
-                        }
+                html += "<name style='margin-right: 15px;'>"+bot.monNom+"</name>";
+                html += "<select  idDofus='" + bot.monIdDofus + "' onchange='setChef(this)' class='selectChef'>";
+                html += "<option value='-1'>Pas de chef</option>";
+                for (var j = 0; j < accounts.length; j++) {
+                    var chef = accounts[j];
+                    if (chef.monNom.length > 0 && chef.monNom != bot.monNom) {
+                        var selected = chef.monNom==bot.nomChef && chef.monNom.length>0?"selected":"";
+                        html += "<option " + selected + "  value='" + chef.monIdDofus + "'>" + chef.monNom + "</option>";
                     }
-                    html+= " </select>";
-                    html += "</div>";
                 }
+                html+= " </select>";
+                html += "</div>";
+            }
         }
         $("#groupManager").append(html);
-       $("#groupContainer").show("100");
-      
+        $("#groupContainer").show("100");
+        
     });
 
     $("#toolbar .fa-shield-alt").click(function () {
@@ -265,7 +265,7 @@ $(document).ready(function () {
         fr.onload = function (evt) {
             var trajetOk = NetfuLauncher.setTrajet(currentAccount, fr.result, file.name.indexOf(".lua")>0);
             $("#trajetFile").val("");
-           
+            
         }
 
     });
@@ -281,26 +281,26 @@ $(document).ready(function () {
 
             $("#iaFile").val("");
         }
-  
+        
 
 
     });
 
     $(".stopTrajet").click(function () {
-       var stopped = NetfuLauncher.stopTrajet(currentAccount);
-        if (stopped) {
-            $("#infosTrajet").hide();
-            $("#trajetFile").val("");
+     var stopped = NetfuLauncher.stopTrajet(currentAccount);
+     if (stopped) {
+        $("#infosTrajet").hide();
+        $("#trajetFile").val("");
 
-        }
-    });
+    }
+});
 
     $("input,option").click(function (e) {
         stopRequest = true;
     });
 
     $('.nav-item').click(function () {
-       
+     
         var id = $($(this).find('a')[0]).attr('href').replace("#", "");
         var oldid = $('.nav-link.active.show');
         oldid = oldid.length > 0 ? oldid.attr('href').replace("#", "") : null;
@@ -321,24 +321,28 @@ $(document).ready(function () {
         switch ($(this).find("span").text()) {
 
             case 'Equipements':
-                $("#listItemInventaire li[itemType=e]").show();
-                break;
+            $("#listItemInventaire li[itemType=e]").show();
+            break;
             case 'Utilisables':
-                $("#listItemInventaire li[itemType=u]").show();
-                break;
+            $("#listItemInventaire li[itemType=u]").show();
+            break;
 
             case 'Ressources':
-                $("#listItemInventaire li[itemType=r]").show();
-                break;
+            $("#listItemInventaire li[itemType=r]").show();
+            break;
             default:
-                $("#listItemInventaire li").show();
-                break;
+            $("#listItemInventaire li").show();
+            break;
         }
 
     });
 
     $("#zoneDeleteAuto .fa-plus-square").click(function () {
-        NetfuLauncher.addItemDelete(currentAccount, parseInt($('#deleteItemSearch').attr('itemId')));
+        if(!isNaN($('#deleteItemSearch').val())){
+            NetfuLauncher.addItemDelete(currentAccount, parseInt($('#deleteItemSearch').val()));
+        }else{
+            NetfuLauncher.addItemDelete(currentAccount, parseInt($('#deleteItemSearch').attr('itemId')));  
+        }
     });
 
     $("#optionTrajet #check").change(function () {
@@ -418,7 +422,7 @@ $(document).ready(function () {
 var oldbot;
 function Ctrl($scope, $timeout)
 {
-   
+ 
 
     $timeout(function () {
         Ctrl($scope, $timeout)
@@ -434,10 +438,10 @@ function Ctrl($scope, $timeout)
 
 
         var b = bot();
-    
+        
         if (b != null) {
             $scope.bot = b;
- 
+            
             if ($scope.currentConfig == null || b.config.hashCode != $scope.currentConfig.hashCode)
                 $scope.currentConfig = b.config;
 
@@ -455,8 +459,8 @@ function Ctrl($scope, $timeout)
 
             if (b.spellHandler) {
                 if ($scope.spellsList == null || $scope.spellsList.hashCode != b.spellHandler.hashCode) {
-   
-               
+                 
+                 
                     for (var i = 0; i < b.spellHandler.SpellsList.length; i++) {
                         var prio = b.config.listSpellLaunch[b.spellHandler.SpellsList[i].Key];
                         b.spellHandler.SpellsList[i].name = b.spellHandler.SpellsName[i];
@@ -505,41 +509,41 @@ function Ctrl($scope, $timeout)
                     });
 
                 }, 1000);
+        }
+
+
+        
+        if ($('#autoboost').val() != b.config.autoboost) {
+            $('#autoboost option').prop('selected', false);
+            $('#autoboost option[value="' + b.config.autoboost + '"]').prop('selected', true);
+        }
+        
+        if ($('#autoboostSpell option:selected').attr('spellid') != b.config.SpellToBoost) {
+            $('#autoboostSpell option').prop('selected', false);
+            $('#autoboostSpell option[spellid="' + b.config.SpellToBoost + '"]').prop('selected', true);
+        }
+
+        if (oldbot == null || oldbot.config.listItemToDelete.length != b.config.listItemToDelete.length) {
+            $("#listItemDelete").html('');
+            for (var i = 0; i < b.config.listItemToDelete.length; i++) {
+                var objet = getObjetById(b.config.listItemToDelete[i]);
+                objet = objet[0];
+                $("#listItemDelete").append('<li style="border-bottom: solid 1px gray;">' +
+                  '<img src="image/items/' + objet.id + '.png" /><p>' + objet.nom + '</p><button  itemId=' + objet.id + ' class="btn btn-danger btndeleteItem">Supprimer</button>' +
+                  '</li>');
             }
 
+            $("#listItemDelete .btndeleteItem").unbind('click').click(function (s) {
+                NetfuLauncher.removeItemDelete(currentAccount,parseInt($(this).attr('itemId')));
+            });
+        }
+        
+        if (b.Inventaire) 
+            if (!oldbot || !oldbot.Inventaire || oldbot.Inventaire.hashCode != b.Inventaire.hashCode)
+                majInventaire(b.Inventaire);
+            
 
             
-            if ($('#autoboost').val() != b.config.autoboost) {
-                $('#autoboost option').prop('selected', false);
-                $('#autoboost option[value="' + b.config.autoboost + '"]').prop('selected', true);
-            }
-       
-            if ($('#autoboostSpell option:selected').attr('spellid') != b.config.SpellToBoost) {
-                $('#autoboostSpell option').prop('selected', false);
-                $('#autoboostSpell option[spellid="' + b.config.SpellToBoost + '"]').prop('selected', true);
-            }
-
-            if (oldbot == null || oldbot.config.listItemToDelete.length != b.config.listItemToDelete.length) {
-                $("#listItemDelete").html('');
-                for (var i = 0; i < b.config.listItemToDelete.length; i++) {
-                    var objet = getObjetById(b.config.listItemToDelete[i]);
-                    objet = objet[0];
-                        $("#listItemDelete").append('<li style="border-bottom: solid 1px gray;">' +
-                                                      '<img src="image/items/' + objet.id + '.png" /><p>' + objet.nom + '</p><button  itemId=' + objet.id + ' class="btn btn-danger btndeleteItem">Supprimer</button>' +
-                                                    '</li>');
-                }
-
-                $("#listItemDelete .btndeleteItem").unbind('click').click(function (s) {
-                    NetfuLauncher.removeItemDelete(currentAccount,parseInt($(this).attr('itemId')));
-                });
-            }
-      
-            if (b.Inventaire) 
-                if (!oldbot || !oldbot.Inventaire || oldbot.Inventaire.hashCode != b.Inventaire.hashCode)
-                        majInventaire(b.Inventaire);
-            
-
-          
 
 
             if (oldbot == null || oldbot.config.itemRegen != b.config.itemRegen) {
@@ -557,7 +561,7 @@ function Ctrl($scope, $timeout)
                 size = ((b.config.globalSpeed + 1) / max) * size;
                 $("#optionTrajet .rangeslider-fill-lower").css('width',size +'px');
                 $('#optionTrajet .rangeslider-thumb').css('left', size + 'px');
-          
+                
                 $("#optionTrajet .output .ng-binding").html(b.config.globalSpeed);
             }
 
@@ -587,7 +591,7 @@ function Ctrl($scope, $timeout)
                 $("#rangecraftpars .rangeslider .rangeslider-thumb .range-output .output").html(b.config.NbCraftSeconde);
             }
 
-           
+            
             if ( oldbot == null || b.FightResult.length != oldbot.FightResult.length) {
                 var times = b.FightResult.map(function (v) { return new Date(v.end);});
                 var exps = b.FightResult.map(function (v) { return v.expWin; });
@@ -619,261 +623,261 @@ function Ctrl($scope, $timeout)
                 }
             }
 
-  
+            
             oldbot = b;
-  
+            
         }
     }, 1000);
 }
 
 
 function bot() {
-        if (accounts != null) {
-            for (var i = 0; i < accounts.length; i++)
-                if (accounts[i] != null && accounts[i]['config']["nomDuCompte"] == currentAccount)
-                    return accounts[i];
+    if (accounts != null) {
+        for (var i = 0; i < accounts.length; i++)
+            if (accounts[i] != null && accounts[i]['config']["nomDuCompte"] == currentAccount)
+                return accounts[i];
         }
         return null;
-}
-
-function majInventaire(Inventaire) {
-
-    $("#listItemInventaire").html("");
-    for (var i = 0; i < Inventaire._LObjets.length; i++) {
-        var objet = getObjetById(Inventaire._LObjets[i].idObjet);
-        objet = objet[0];
-        var type = objet.isEquipement ? 'e' : (objet.usable ? 'u' : 'r');
-
-        var btnFami = Inventaire._LObjets[i].isFami ? '<button class="btn btn-warning" style="margin-top: 5px;margin-left:15px" class="eatFami">Nourir</button>' : '';
-        $("#listItemInventaire").append('<li  itemType=' + type + ' itemIdInv=' + Inventaire._LObjets[i].idObjetInv + ' style="border-bottom: solid 1px gray;">' +
-                        '<div class="row" style="margin-right:0px;">' +
-                            '<div class="col-sm-4">' +
-                                '<img src="image/items/' + objet.id + '.png" style="width:35px" />' +
-                            '</div>' +
-                            '<div class="col-sm-4 infosItem">' +
-                                '<name>' + objet.nom + '</name>' +
-                                '<qty>Nombre ' + Inventaire._LObjets[i].numObjet + '</qty>' +
-                                '<level>Niveau ' + objet.level + '</level>' +
-                            '</div>' +
-                            '<div class="col-sm-4">' +
-                                '<button class="btn btn-danger" style="margin-top: 5px;" class="deleteItem">Supprimer</button>' +
-                                btnFami+
-                            '</div>' +
-                        '</div>' +
-                    '</li>');
     }
 
+    function majInventaire(Inventaire) {
 
-    $("#listItemInventaire").find(".btn-danger").unbind('click').click(function () {
-        NetfuLauncher.deleteItem(currentAccount, parseInt($(this).parents("li").attr('itemIdInv')));
-    });
+        $("#listItemInventaire").html("");
+        for (var i = 0; i < Inventaire._LObjets.length; i++) {
+            var objet = getObjetById(Inventaire._LObjets[i].idObjet);
+            objet = objet[0];
+            var type = objet.isEquipement ? 'e' : (objet.usable ? 'u' : 'r');
 
-    $("#listItemInventaire").find(".btn-warning").unbind('click').click(function () {
-        var itemID = $(this).parents("li").attr('itemIdInv');
-        var fami = bot().familiers.find(function (f) { return f.Fami.idObjetInv.toString() == itemID.toString() });
-        console.log(fami);
+            var btnFami = Inventaire._LObjets[i].isFami ? '<button class="btn btn-warning" style="margin-top: 5px;margin-left:15px" class="eatFami">Nourir</button>' : '';
+            $("#listItemInventaire").append('<li  itemType=' + type + ' itemIdInv=' + Inventaire._LObjets[i].idObjetInv + ' style="border-bottom: solid 1px gray;">' +
+                '<div class="row" style="margin-right:0px;">' +
+                '<div class="col-sm-4">' +
+                '<img src="image/items/' + objet.id + '.png" style="width:35px" />' +
+                '</div>' +
+                '<div class="col-sm-4 infosItem">' +
+                '<name>' + objet.nom + '</name>' +
+                '<qty>Nombre ' + Inventaire._LObjets[i].numObjet + '</qty>' +
+                '<level>Niveau ' + objet.level + '</level>' +
+                '</div>' +
+                '<div class="col-sm-4">' +
+                '<button class="btn btn-danger" style="margin-top: 5px;" class="deleteItem">Supprimer</button>' +
+                btnFami+
+                '</div>' +
+                '</div>' +
+                '</li>');
+        }
 
-        if (fami) 
-            showFami(fami);
-    });
-}
 
-function showFami(fami) {
-    $("#famiName").html(fami.Fami.nomObjet);
-    $("#famiImg").attr('src', 'image/items/' + fami.Fami.idObjet + '.png');
-    $("#pdvFami").html("Point de vie: " + fami.PDV);
-    $("#etatFami").html("Etat: " +( fami.etat ==1000?"maigrichon":fami.etat==1?"normal":"obese"));
-    $("#eatFami").html("Dernier repas: " + fami.lastEat.replace('T',' '));
-    $("#famiStats").empty();
-    $("#famiStats").append("<ul>");
-    for (var key in fami.Nourriture) {
-        var selected = fami.StatsToAugmente.indexOf(key) >= 0 ? "selected" : "";
-        $("#famiStats").append("<li idFami=" + fami.Fami.idObjetInv + " class='statsToAugment " + selected + " 'stats=" + key + ">" + key + "</li>");
+        $("#listItemInventaire").find(".btn-danger").unbind('click').click(function () {
+            NetfuLauncher.deleteItem(currentAccount, parseInt($(this).parents("li").attr('itemIdInv')));
+        });
+
+        $("#listItemInventaire").find(".btn-warning").unbind('click').click(function () {
+            var itemID = $(this).parents("li").attr('itemIdInv');
+            var fami = bot().familiers.find(function (f) { return f.Fami.idObjetInv.toString() == itemID.toString() });
+            console.log(fami);
+
+            if (fami) 
+                showFami(fami);
+        });
     }
-    for (var key in fami.NourritureType) {
-        var selected = fami.StatsToAugmente.indexOf(key) >= 0 ? "selected" : "";
-        $("#famiStats").append("<li idFami=" + fami.Fami.idObjetInv + " class='statsToAugment " + selected + " 'stats=" + key + ">" + key + "</li>");
+
+    function showFami(fami) {
+        $("#famiName").html(fami.Fami.nomObjet);
+        $("#famiImg").attr('src', 'image/items/' + fami.Fami.idObjet + '.png');
+        $("#pdvFami").html("Point de vie: " + fami.PDV);
+        $("#etatFami").html("Etat: " +( fami.etat ==1000?"maigrichon":fami.etat==1?"normal":"obese"));
+        $("#eatFami").html("Dernier repas: " + fami.lastEat.replace('T',' '));
+        $("#famiStats").empty();
+        $("#famiStats").append("<ul>");
+        for (var key in fami.Nourriture) {
+            var selected = fami.StatsToAugmente.indexOf(key) >= 0 ? "selected" : "";
+            $("#famiStats").append("<li idFami=" + fami.Fami.idObjetInv + " class='statsToAugment " + selected + " 'stats=" + key + ">" + key + "</li>");
+        }
+        for (var key in fami.NourritureType) {
+            var selected = fami.StatsToAugmente.indexOf(key) >= 0 ? "selected" : "";
+            $("#famiStats").append("<li idFami=" + fami.Fami.idObjetInv + " class='statsToAugment " + selected + " 'stats=" + key + ">" + key + "</li>");
+        }
+
+        $("#famiStats").append("</ul>");
+        $("#famiContainer").show();
+
+        $(".statsToAugment").unbind('click').click(function () {
+            var selected = $(this).hasClass('selected');
+            if (!selected)
+                $(this).addClass('selected');
+            else
+                $(this).removeClass('selected');
+            var itemUid = $(this).attr('idFami');
+            var stats = $(this).attr("stats");
+            NetfuLauncher.setFamilier(currentAccount, itemUid, stats)
+        });
     }
 
-    $("#famiStats").append("</ul>");
-    $("#famiContainer").show();
+    function createRecolte() {
+        $("#divRecolte").empty();
+        $("#divRecolte").html("<h2>Metiers</h2>");
 
-    $(".statsToAugment").unbind('click').click(function () {
-        var selected = $(this).hasClass('selected');
-        if (!selected)
-            $(this).addClass('selected');
-        else
-            $(this).removeClass('selected');
-        var itemUid = $(this).attr('idFami');
-        var stats = $(this).attr("stats");
-        NetfuLauncher.setFamilier(currentAccount, itemUid, stats)
-    });
-}
+        
+        for (var i = 0; i < bot().Jobs.Jobs.length; i++) {
+            var job = bot().Jobs.Jobs[i];
+            var jobIO = getJobById(job.id)[0];
+            var xpcurrent = job.expCurrent - job.expInf;
+            var xpsup = job.expSup - job.expInf;
+            var xp = parseInt((xpcurrent / xpsup) * 100);
+            var html = '<div class="jobContainer">';
 
-function createRecolte() {
-    $("#divRecolte").empty();
-    $("#divRecolte").html("<h2>Metiers</h2>");
-
-  
-    for (var i = 0; i < bot().Jobs.Jobs.length; i++) {
-        var job = bot().Jobs.Jobs[i];
-        var jobIO = getJobById(job.id)[0];
-        var xpcurrent = job.expCurrent - job.expInf;
-        var xpsup = job.expSup - job.expInf;
-        var xp = parseInt((xpcurrent / xpsup) * 100);
-        var html = '<div class="jobContainer">';
-
-        html += '<div style="width:100%;text-align:center;font-size:14px;"><i class="fas fa-arrows-alt-v" aria-hidden="true"></i><job>' + jobIO.nom + '</job></div>';
-        html += '<div class="infosJob">';
-        html += '<div class="progress">'
-        html += '<exp class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="' + xp + '" aria-valuemin="0" aria-valuemax="100" style="width: ' + xp + '%"><label style="color:black;width:162px">Niveau ' + job.level + ' (' + xp + '%)</label></exp>'
-        html += '</div>'
-        html += '</div>';
-        html += '<ul class="ressourceList">';
-        var itemsAdded = [];
-  
-        for (var j = 0; j < job.Skills.length; j++) {
-            var skill = job.Skills[j];
-            var skillIO = getSkillById(skill._nID)[0];
-            if (skillIO.item != null && itemsAdded.indexOf(skillIO.item.nom) < 0) {
-                var selected = bot().config.listRessourcesRecolt.indexOf(skillIO.id) >= 0 ? "selected" : "";
-                html += "<li class='" + selected + "' itemId='" + skillIO.item.id + "' skillId='" + skillIO.id + "' '>";
+            html += '<div style="width:100%;text-align:center;font-size:14px;"><i class="fas fa-arrows-alt-v" aria-hidden="true"></i><job>' + jobIO.nom + '</job></div>';
+            html += '<div class="infosJob">';
+            html += '<div class="progress">'
+            html += '<exp class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="' + xp + '" aria-valuemin="0" aria-valuemax="100" style="width: ' + xp + '%"><label style="color:black;width:162px">Niveau ' + job.level + ' (' + xp + '%)</label></exp>'
+            html += '</div>'
+            html += '</div>';
+            html += '<ul class="ressourceList">';
+            var itemsAdded = [];
+            
+            for (var j = 0; j < job.Skills.length; j++) {
+                var skill = job.Skills[j];
+                var skillIO = getSkillById(skill._nID)[0];
+                if (skillIO.item != null && itemsAdded.indexOf(skillIO.item.nom) < 0) {
+                    var selected = bot().config.listRessourcesRecolt.indexOf(skillIO.id) >= 0 ? "selected" : "";
+                    html += "<li class='" + selected + "' itemId='" + skillIO.item.id + "' skillId='" + skillIO.id + "' '>";
                     html += '<name>' + skillIO.item.nom + '</name>'
                     html += '<img src="image/items/' + skillIO.item.id + '.png" />';
                     itemsAdded.push(skillIO.item.nom);
-                   
-            }
-            else if (skillIO != null && skillIO.craftsList != null) 
-                for(var si = 0;si<skillIO.craftsList.length;si++){
-                    var craft= getCraftById(skillIO.craftsList[si].id);
-                    var objTocraft = getObjetById(skillIO.craftsList[si].id)[0];
-                    if (craft != null)
-
-                    if (craft != null && craft.Value.Key.length < (2 + Math.floor(job.level / 10)) && itemsAdded.indexOf(objTocraft.nom) <0)
-                    {
-                        var selected = bot().config.listItemToCrafts.indexOf(objTocraft.id) >= 0 ? "selected" : "";
-                        html += "<li class='" + selected + " artisanat' itemId='" + objTocraft.id + "'>";
-                        html += '<name>' + objTocraft.nom + '</name>'
-                        html += '<img src="image/items/' + objTocraft.id + '.png" />';
-                        itemsAdded.push(objTocraft.nom);
-                    }
-
-
+                    
                 }
-        
-            html += "</li>";
-        }
-        html += '</ul>';
+                else if (skillIO != null && skillIO.craftsList != null) 
+                    for(var si = 0;si<skillIO.craftsList.length;si++){
+                        var craft= getCraftById(skillIO.craftsList[si].id);
+                        var objTocraft = getObjetById(skillIO.craftsList[si].id)[0];
+                        if (craft != null)
 
-        if (jobIO.id == 36) 
-            html += "<div> Porte de la canne : <input style='width: 45px;' id='porteCanne' type='number' value=" + bot().config.portecanne + " > </div>"
-        
-
-        html += "</div>";
-
-        if(itemsAdded.length>0)
-            $("#divRecolte").append(html);
-    }
-
-    $(".jobContainer .fa-arrows-alt-v").unbind('click').click(function () {
-        var container = $(this).parent().parent();
-
-        if(!container.hasClass('expanded'))
-            container.addClass('expanded');
-        else
-            container.removeClass('expanded');
-    });
-
-    $(".ressourceList li").unbind('click').click(function () {
-        if($(this).hasClass('selected'))
-            $(this).removeClass('selected');
-        else
-            $(this).addClass('selected');
-
-        var artisanat =$(this).hasClass('artisanat');
-        var id = artisanat?$(this).attr('itemId'):$(this).attr('skillId');
-
-        NetfuLauncher.setRecolteItem(currentAccount, id, $(this).hasClass('selected'), artisanat);
-    });
-
-    $("#porteCanne").unbind('change').change(function () {
-        NetfuLauncher.setPorteCanne(currentAccount, $(this).val());
-    });
-   
-
-}
-
-function setChef(elt) {
- 
-    var idDofus = $(elt).attr('idDofus');
-    var chef = $(elt).val();
-    NetfuLauncher.setChef(idDofus, chef);
-}
-
-function getObjetById(id) {
-    return objets.filter(function (o) { return o.id == id });
-}
-
-function getJobById(id) {
-    return jobs.filter(function (o) { return o.id == id });
-}
-
-function getSkillById(id) {
-    return skills.filter(function (o) { return o.id == id });
-}
-
-function getCraftById(id) {
-    for (var i = 0; i < crafts.length; i++)
-        if (crafts[i].Key == id)
-            return crafts[i];
-}
-
-    function getCurrentUI() {
-        var b = bot();
-        if (accountsUI == null)
-            accountsUI = {};
-
-        var menuLogin = ["tab-compte", "tab-proxy"];
-
-        var wrongMenu = accountsUI[currentAccount] == null || accountsUI[currentAccount] == 'undefined' ||
-                        ((b['status'] == null || b['status']['connexion'] != 3) && menuLogin.indexOf(accountsUI[currentAccount]) < 0)
-                        || (accountsUI[currentAccount] != null &&  b['status'] != null && b['status']['connexion'] == 3 && menuLogin.indexOf(accountsUI[currentAccount]) >= 0);
-        if (wrongMenu)
-         accountsUI[currentAccount] =  (b['status'] == null || b['status']['connexion'] !=3)?"tab-compte":"tab-perso";
-        
-        return accountsUI[currentAccount];
-    }
-
-    function setCurrentUi(uiName) {
-        if (accountsUI == null)
-            accountsUI = {};
-
-        accountsUI[currentAccount] = uiName;
-       
-    }
+                            if (craft != null && craft.Value.Key.length < (2 + Math.floor(job.level / 10)) && itemsAdded.indexOf(objTocraft.nom) <0)
+                            {
+                                var selected = bot().config.listItemToCrafts.indexOf(objTocraft.id) >= 0 ? "selected" : "";
+                                html += "<li class='" + selected + " artisanat' itemId='" + objTocraft.id + "'>";
+                                html += '<name>' + objTocraft.nom + '</name>'
+                                html += '<img src="image/items/' + objTocraft.id + '.png" />';
+                                itemsAdded.push(objTocraft.nom);
+                            }
 
 
+                        }
+                        
+                        html += "</li>";
+                    }
+                    html += '</ul>';
 
-    var loadTaskRefresh;
-    function InitNetfu() {
-         loadTaskRefresh = setInterval(function () {
-             console.log(NetfuLauncher);
-            if (NetfuLauncher.loading) {
-                $("#msgLoader").html(NetfuLauncher.loadingStat);
+                    if (jobIO.id == 36) 
+                        html += "<div> Porte de la canne : <input style='width: 45px;' id='porteCanne' type='number' value=" + bot().config.portecanne + " > </div>"
+                    
+
+                    html += "</div>";
+
+                    if(itemsAdded.length>0)
+                        $("#divRecolte").append(html);
+                }
+
+                $(".jobContainer .fa-arrows-alt-v").unbind('click').click(function () {
+                    var container = $(this).parent().parent();
+
+                    if(!container.hasClass('expanded'))
+                        container.addClass('expanded');
+                    else
+                        container.removeClass('expanded');
+                });
+
+                $(".ressourceList li").unbind('click').click(function () {
+                    if($(this).hasClass('selected'))
+                        $(this).removeClass('selected');
+                    else
+                        $(this).addClass('selected');
+
+                    var artisanat =$(this).hasClass('artisanat');
+                    var id = artisanat?$(this).attr('itemId'):$(this).attr('skillId');
+
+                    NetfuLauncher.setRecolteItem(currentAccount, id, $(this).hasClass('selected'), artisanat);
+                });
+
+                $("#porteCanne").unbind('change').change(function () {
+                    NetfuLauncher.setPorteCanne(currentAccount, $(this).val());
+                });
+                
+
             }
-            else if(NetfuLauncher.resLicence == 1)
-                $(document).trigger("onLoadCompte");
-            else
-                $(document).trigger("onLicenceInvalide");
 
-      
+            function setChef(elt) {
+               
+                var idDofus = $(elt).attr('idDofus');
+                var chef = $(elt).val();
+                NetfuLauncher.setChef(idDofus, chef);
+            }
 
-        }, 500);
-        initChart();
-    }
+            function getObjetById(id) {
+                return objets.filter(function (o) { return o.id == id });
+            }
 
-    function initChart() {
-        var ctx = document.getElementById('canvasStats').getContext('2d');
+            function getJobById(id) {
+                return jobs.filter(function (o) { return o.id == id });
+            }
+
+            function getSkillById(id) {
+                return skills.filter(function (o) { return o.id == id });
+            }
+
+            function getCraftById(id) {
+                for (var i = 0; i < crafts.length; i++)
+                    if (crafts[i].Key == id)
+                        return crafts[i];
+                }
+
+                function getCurrentUI() {
+                    var b = bot();
+                    if (accountsUI == null)
+                        accountsUI = {};
+
+                    var menuLogin = ["tab-compte", "tab-proxy"];
+
+                    var wrongMenu = accountsUI[currentAccount] == null || accountsUI[currentAccount] == 'undefined' ||
+                    ((b['status'] == null || b['status']['connexion'] != 3) && menuLogin.indexOf(accountsUI[currentAccount]) < 0)
+                    || (accountsUI[currentAccount] != null &&  b['status'] != null && b['status']['connexion'] == 3 && menuLogin.indexOf(accountsUI[currentAccount]) >= 0);
+                    if (wrongMenu)
+                       accountsUI[currentAccount] =  (b['status'] == null || b['status']['connexion'] !=3)?"tab-compte":"tab-perso";
+                   
+                   return accountsUI[currentAccount];
+               }
+
+               function setCurrentUi(uiName) {
+                if (accountsUI == null)
+                    accountsUI = {};
+
+                accountsUI[currentAccount] = uiName;
+                
+            }
+
+
+
+            var loadTaskRefresh;
+            function InitNetfu() {
+               loadTaskRefresh = setInterval(function () {
+                   console.log(NetfuLauncher);
+                   if (NetfuLauncher.loading) {
+                    $("#msgLoader").html(NetfuLauncher.loadingStat);
+                }
+                else if(NetfuLauncher.resLicence == 1)
+                    $(document).trigger("onLoadCompte");
+                else
+                    $(document).trigger("onLicenceInvalide");
+
+                
+
+            }, 500);
+               initChart();
+           }
+
+           function initChart() {
+            var ctx = document.getElementById('canvasStats').getContext('2d');
             window.myBar = new Chart(ctx, {
                 type: 'bar',
                 data: null,
@@ -932,30 +936,30 @@ function getCraftById(id) {
                 purple: 'rgb(153, 102, 255)',
                 grey: 'rgb(201, 203, 207)'
             };
-    }
+        }
 
-    function bindAutoComplete() {
+        function bindAutoComplete() {
 
 
-        $("#deleteItemSearch").autocomplete({
-            source:function(request, response) {
-                var results = objets.filter(function (o) { return o.nom.toLowerCase().indexOf(request.term.toLowerCase()) > -1 });
+            $("#deleteItemSearch").autocomplete({
+                source:function(request, response) {
+                    var results = objets.filter(function (o) { return o.nom.toLowerCase().indexOf(request.term.toLowerCase()) > -1 });
 
-                response(results.slice(0, 7));
-            },
-            select: function (event, ui) {
-                $("#deleteItemSearch").val(ui.item.nom);
-                $("#deleteItemSearch").attr('itemId',ui.item.id);
-                return false;
-            }
-        }).data("ui-autocomplete")._renderItem = function (ul, item) {
-            
-          return $('<li itemId="' + item.id + '" class="liItem" ">')
-        .append('<div style="display:inline-flex;font-size:10px"><p>' + item.nom + '</p>')
-        .append("<img style='width:30px;' src='image\\items\\" + item.id + ".png'/></div>").appendTo(ul);
-        };
+                    response(results.slice(0, 7));
+                },
+                select: function (event, ui) {
+                    $("#deleteItemSearch").val(ui.item.nom);
+                    $("#deleteItemSearch").attr('itemId',ui.item.id);
+                    return false;
+                }
+            }).data("ui-autocomplete")._renderItem = function (ul, item) {
+                
+              return $('<li itemId="' + item.id + '" class="liItem" ">')
+              .append('<div style="display:inline-flex;font-size:10px"><p>' + item.nom + '</p>')
+              .append("<img style='width:30px;' src='image\\items\\" + item.id + ".png'/></div>").appendTo(ul);
+          };
 
-        $("#searchItemAchatAuto").autocomplete({
+          $("#searchItemAchatAuto").autocomplete({
             source: function (request, response) {
                 var results = objets.filter(function (o) { return o.nom.toLowerCase().indexOf(request.term.toLowerCase()) > -1 });
 
@@ -969,10 +973,10 @@ function getCraftById(id) {
         }).data("ui-autocomplete")._renderItem = function (ul, item) {
 
             return $('<li itemId="' + item.id + '" class="liItem" ">')
-          .append('<div style="display:inline-flex;font-size:10px"><p>' + item.nom + '</p>')
-          .append("<img style='width:30px;' src='image\\items\\" + item.id + ".png'/></div>").appendTo(ul);
+            .append('<div style="display:inline-flex;font-size:10px"><p>' + item.nom + '</p>')
+            .append("<img style='width:30px;' src='image\\items\\" + item.id + ".png'/></div>").appendTo(ul);
         };
-      
+        
 
         $("#regenItem").autocomplete({
             source: function (request, response) {
@@ -988,8 +992,8 @@ function getCraftById(id) {
         }).data("ui-autocomplete")._renderItem = function (ul, item) {
 
             return $('<li itemId="' + item.id + '" class="liItem"  >')
-        .append('<div style="display:inline-flex;font-size:10px"><p>' + item.nom + '</p>')
-        .append("<img style='width:30px;' src='image\\items\\" + item.id + ".png'/></div>").appendTo(ul);
+            .append('<div style="display:inline-flex;font-size:10px"><p>' + item.nom + '</p>')
+            .append("<img style='width:30px;' src='image\\items\\" + item.id + ".png'/></div>").appendTo(ul);
         };
 
         $("#searchMonsterAD").autocomplete({
@@ -1004,7 +1008,7 @@ function getCraftById(id) {
         }).data("ui-autocomplete")._renderItem = function (ul, item) {
 
             return $('<li  class="liItem"  >')
-        .append('<div style="display:inline-flex;font-size:10px"><p>' + item.nom + '</p>').appendTo(ul);
+            .append('<div style="display:inline-flex;font-size:10px"><p>' + item.nom + '</p>').appendTo(ul);
         };
     }
 
@@ -1014,7 +1018,7 @@ function getCraftById(id) {
     }
 
     function launchRefreshTimer() {
-                setInterval(function () {
+        setInterval(function () {
             if (currentAccount != null)
                 $(document).trigger("onRefreshCompte");
         }, 1000);
@@ -1038,7 +1042,7 @@ function getCraftById(id) {
         $(".loader-ring").hide();
         $('#accounts').show("500");
         //A la selection d'un onglet
-     
+        
         $("#tabsBot li").unbind("click").click(function () {
             setCurrentUi($(this).find("a").attr('id'));
             showBotWindows(false);
@@ -1079,8 +1083,8 @@ function getCraftById(id) {
        //    else if (accounts[i] != null && accounts[i]['config']["nomDuCompte"] == acc['config']["nomDuCompte"])
        //        accounts[i] = acc;
        //}
-    });
-   
+   });
+    
 
     function accountClick(el) {
         $('.account').removeClass('selected');
@@ -1109,9 +1113,9 @@ function getCraftById(id) {
             $('#' + currentUi).click();
             return;
         }
-  
+        
         var botConnect = (b['status'] != null && b['status']['connexion'] == 3);
-    
+        
         $('.unconnectTab').toggle(!botConnect);
         $('.connectTab').toggle(botConnect);
 
@@ -1119,10 +1123,10 @@ function getCraftById(id) {
             setTimeout(function () { $("#botPanel").show("1000"); }, 1150);
         switch (currentUi) {
             case 'tab-trajet':
-                $("#infosTrajet").toggle(b['MovementTrajet'] != null);
-                $("#onglet-trajet .custom-file").toggle(b['MovementTrajet'] == null);
+            $("#infosTrajet").toggle(b['MovementTrajet'] != null);
+            $("#onglet-trajet .custom-file").toggle(b['MovementTrajet'] == null);
             break;
         }
-           
+        
     }
 
