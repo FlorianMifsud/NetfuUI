@@ -18,7 +18,7 @@ $(document).ready(function () {
         $("#botPanel").hide();
         $(".account").removeClass('selected');
         $("#addAccountPanel").show("100");
-        
+
     });
 
 
@@ -46,14 +46,14 @@ $(document).ready(function () {
         $(this).parent().find('input[type=checkbox]').click();
     });
 
-    
+
 
     $("#copieToGroupe").click(function () {
         NetfuLauncher.setDeleteItemGroup(currentAccount);
     });
 
     $("#tab-compte").click(function () {
-      
+
         if ($("#serveurModAcc option").length == 0)
         {
             for (var i = 0; i < serveurs.length; i++) {
@@ -73,7 +73,7 @@ $(document).ready(function () {
         $("#numPersoModAcc").val(bot().config.numeroPerso);
         $("#mitmModAcc").prop("checked",bot().config.mitm);
 
-        
+
     });
 
     $("#tab-metier").click(function () {
@@ -86,10 +86,10 @@ $(document).ready(function () {
         for (var i = 0; i < inputs.length; i++)
         {
             if ($(inputs[i]).val() == null || $(inputs[i]).val() == "") {
-             
+
                 $(inputs[i]).attr('style', 'border: 1px solid #dc3545');
                 setTimeout(function () {
-                   
+
                     $("#modifAccountPanel input").attr('style', '');
                 }, 2000);
                 checkControl = false;
@@ -177,7 +177,7 @@ $(document).ready(function () {
         }
         $("#groupManager").append(html);
         $("#groupContainer").show("100");
-        
+
     });
 
     $("#toolbar .fa-shield-alt").click(function () {
@@ -265,7 +265,7 @@ $(document).ready(function () {
         fr.onload = function (evt) {
             var trajetOk = NetfuLauncher.setTrajet(currentAccount, fr.result, file.name.indexOf(".lua")>0);
             $("#trajetFile").val("");
-            
+
         }
 
     });
@@ -281,7 +281,7 @@ $(document).ready(function () {
 
             $("#iaFile").val("");
         }
-        
+
 
 
     });
@@ -300,7 +300,7 @@ $(document).ready(function () {
     });
 
     $('.nav-item').click(function () {
-     
+
         var id = $($(this).find('a')[0]).attr('href').replace("#", "");
         var oldid = $('.nav-link.active.show');
         oldid = oldid.length > 0 ? oldid.attr('href').replace("#", "") : null;
@@ -422,7 +422,7 @@ $(document).ready(function () {
 var oldbot;
 function Ctrl($scope, $timeout)
 {
- 
+
 
     $timeout(function () {
         Ctrl($scope, $timeout)
@@ -438,10 +438,10 @@ function Ctrl($scope, $timeout)
 
 
         var b = bot();
-        
+
         if (b != null) {
             $scope.bot = b;
-            
+
             if ($scope.currentConfig == null || b.config.hashCode != $scope.currentConfig.hashCode)
                 $scope.currentConfig = b.config;
 
@@ -449,6 +449,7 @@ function Ctrl($scope, $timeout)
 
                 $scope.vieRestante = ((b.InfosPerso.LP / b.InfosPerso.LPmax) * 100).toFixed(0);
                 $scope.exp = (((b.InfosPerso.XP - b.InfosPerso.XPlow) / (b.InfosPerso.XPhigh - b.InfosPerso.XPlow)) * 100).toFixed(0);
+                $scope.energie =  ((b.InfosPerso.Energye / b.InfosPerso.EnergyMax) * 100).toFixed(0);
             }
 
             if (b.map != null) {
@@ -459,8 +460,8 @@ function Ctrl($scope, $timeout)
 
             if (b.spellHandler) {
                 if ($scope.spellsList == null || $scope.spellsList.hashCode != b.spellHandler.hashCode) {
-                 
-                 
+
+
                     for (var i = 0; i < b.spellHandler.SpellsList.length; i++) {
                         var prio = b.config.listSpellLaunch[b.spellHandler.SpellsList[i].Key];
                         b.spellHandler.SpellsList[i].name = b.spellHandler.SpellsName[i];
@@ -512,12 +513,12 @@ function Ctrl($scope, $timeout)
         }
 
 
-        
+
         if ($('#autoboost').val() != b.config.autoboost) {
             $('#autoboost option').prop('selected', false);
             $('#autoboost option[value="' + b.config.autoboost + '"]').prop('selected', true);
         }
-        
+
         if ($('#autoboostSpell option:selected').attr('spellid') != b.config.SpellToBoost) {
             $('#autoboostSpell option').prop('selected', false);
             $('#autoboostSpell option[spellid="' + b.config.SpellToBoost + '"]').prop('selected', true);
@@ -537,13 +538,13 @@ function Ctrl($scope, $timeout)
                 NetfuLauncher.removeItemDelete(currentAccount,parseInt($(this).attr('itemId')));
             });
         }
-        
+
         if (b.Inventaire) 
             if (!oldbot || !oldbot.Inventaire || oldbot.Inventaire.hashCode != b.Inventaire.hashCode)
                 majInventaire(b.Inventaire);
             
 
-            
+
 
 
             if (oldbot == null || oldbot.config.itemRegen != b.config.itemRegen) {
@@ -561,7 +562,7 @@ function Ctrl($scope, $timeout)
                 size = ((b.config.globalSpeed + 1) / max) * size;
                 $("#optionTrajet .rangeslider-fill-lower").css('width',size +'px');
                 $('#optionTrajet .rangeslider-thumb').css('left', size + 'px');
-                
+
                 $("#optionTrajet .output .ng-binding").html(b.config.globalSpeed);
             }
 
@@ -591,7 +592,7 @@ function Ctrl($scope, $timeout)
                 $("#rangecraftpars .rangeslider .rangeslider-thumb .range-output .output").html(b.config.NbCraftSeconde);
             }
 
-            
+
             if ( oldbot == null || b.FightResult.length != oldbot.FightResult.length) {
                 var times = b.FightResult.map(function (v) { return new Date(v.end);});
                 var exps = b.FightResult.map(function (v) { return v.expWin; });
@@ -623,9 +624,9 @@ function Ctrl($scope, $timeout)
                 }
             }
 
-            
+
             oldbot = b;
-            
+
         }
     }, 1000);
 }
@@ -718,7 +719,7 @@ function bot() {
         $("#divRecolte").empty();
         $("#divRecolte").html("<h2>Metiers</h2>");
 
-        
+
         for (var i = 0; i < bot().Jobs.Jobs.length; i++) {
             var job = bot().Jobs.Jobs[i];
             var jobIO = getJobById(job.id)[0];
@@ -735,7 +736,7 @@ function bot() {
             html += '</div>';
             html += '<ul class="ressourceList">';
             var itemsAdded = [];
-            
+
             for (var j = 0; j < job.Skills.length; j++) {
                 var skill = job.Skills[j];
                 var skillIO = getSkillById(skill._nID)[0];
@@ -745,7 +746,7 @@ function bot() {
                     html += '<name>' + skillIO.item.nom + '</name>'
                     html += '<img src="image/items/' + skillIO.item.id + '.png" />';
                     itemsAdded.push(skillIO.item.nom);
-                    
+
                 }
                 else if (skillIO != null && skillIO.craftsList != null) 
                     for(var si = 0;si<skillIO.craftsList.length;si++){
@@ -764,14 +765,14 @@ function bot() {
 
 
                         }
-                        
+
                         html += "</li>";
                     }
                     html += '</ul>';
 
                     if (jobIO.id == 36) 
                         html += "<div> Porte de la canne : <input style='width: 45px;' id='porteCanne' type='number' value=" + bot().config.portecanne + " > </div>"
-                    
+
 
                     html += "</div>";
 
@@ -803,12 +804,12 @@ function bot() {
                 $("#porteCanne").unbind('change').change(function () {
                     NetfuLauncher.setPorteCanne(currentAccount, $(this).val());
                 });
-                
+
 
             }
 
             function setChef(elt) {
-               
+
                 var idDofus = $(elt).attr('idDofus');
                 var chef = $(elt).val();
                 NetfuLauncher.setChef(idDofus, chef);
@@ -844,7 +845,7 @@ function bot() {
                     || (accountsUI[currentAccount] != null &&  b['status'] != null && b['status']['connexion'] == 3 && menuLogin.indexOf(accountsUI[currentAccount]) >= 0);
                     if (wrongMenu)
                        accountsUI[currentAccount] =  (b['status'] == null || b['status']['connexion'] !=3)?"tab-compte":"tab-perso";
-                   
+
                    return accountsUI[currentAccount];
                }
 
@@ -853,7 +854,7 @@ function bot() {
                     accountsUI = {};
 
                 accountsUI[currentAccount] = uiName;
-                
+
             }
 
 
@@ -870,7 +871,7 @@ function bot() {
                 else
                     $(document).trigger("onLicenceInvalide");
 
-                
+
 
             }, 500);
                initChart();
@@ -953,7 +954,7 @@ function bot() {
                     return false;
                 }
             }).data("ui-autocomplete")._renderItem = function (ul, item) {
-                
+
               return $('<li itemId="' + item.id + '" class="liItem" ">')
               .append('<div style="display:inline-flex;font-size:10px"><p>' + item.nom + '</p>')
               .append("<img style='width:30px;' src='image\\items\\" + item.id + ".png'/></div>").appendTo(ul);
@@ -976,7 +977,7 @@ function bot() {
             .append('<div style="display:inline-flex;font-size:10px"><p>' + item.nom + '</p>')
             .append("<img style='width:30px;' src='image\\items\\" + item.id + ".png'/></div>").appendTo(ul);
         };
-        
+
 
         $("#regenItem").autocomplete({
             source: function (request, response) {
@@ -1042,7 +1043,7 @@ function bot() {
         $(".loader-ring").hide();
         $('#accounts').show("500");
         //A la selection d'un onglet
-        
+
         $("#tabsBot li").unbind("click").click(function () {
             setCurrentUi($(this).find("a").attr('id'));
             showBotWindows(false);
@@ -1084,7 +1085,7 @@ function bot() {
        //        accounts[i] = acc;
        //}
    });
-    
+
 
     function accountClick(el) {
         $('.account').removeClass('selected');
@@ -1113,9 +1114,9 @@ function bot() {
             $('#' + currentUi).click();
             return;
         }
-        
+
         var botConnect = (b['status'] != null && b['status']['connexion'] == 3);
-        
+
         $('.unconnectTab').toggle(!botConnect);
         $('.connectTab').toggle(botConnect);
 
@@ -1127,6 +1128,6 @@ function bot() {
             $("#onglet-trajet .custom-file").toggle(b['MovementTrajet'] == null);
             break;
         }
-        
+
     }
 
