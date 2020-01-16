@@ -597,18 +597,6 @@ function Ctrl($scope, $timeout)
                 var times = b.FightResult.map(function (v) { return new Date(v.end);});
                 var exps = b.FightResult.map(function (v) { return v.expWin; });
                 var nbCombat = b.FightResult.length;
-                var barChartData = {
-                    labels: times.slice(Math.max(b.FightResult.length - 100, 1)).map(function (d) { return d.getHours() + ":" + d.getMinutes() }),
-                    datasets: [{
-                        label: 'Exp',
-                        backgroundColor: Chart.helpers.color(window.chartColors.green).alpha(0.5).rgbString(),
-                        borderColor: window.chartColors.green,
-                        borderWidth: 1,
-                        data: exps.slice(Math.max(b.FightResult.length - 100, 1))
-                    }]
-                };
-                window.myBar.data = barChartData;
-                window.myBar.update();
 
                 if (nbCombat > 0) {
                     const reducer = (accumulator, currentValue) => accumulator + currentValue;
@@ -874,70 +862,7 @@ function bot() {
 
 
             }, 500);
-               initChart();
            }
-
-           function initChart() {
-            var ctx = document.getElementById('canvasStats').getContext('2d');
-            window.myBar = new Chart(ctx, {
-                type: 'bar',
-                data: null,
-                options: {
-                    responsive: true,
-                    legend: {
-                        position: 'top'
-                    },
-                    scales: {
-                        yAxes: [{
-                            stacked: true,
-                            color: 'rgb(255, 255, 255)',
-                            gridLines: {
-                                display: true,
-                                color: "rgba(255,255,255,0.3)"
-
-                            },
-                            scaleLabel: {
-                                display: true,
-                                labelString: 'Experience',
-                                fontColor: 'rgb(255, 255, 255)',
-                                fontSize: 14
-                            },
-                            ticks: {
-                                fontColor: 'rgb(255, 255, 255)', // this here
-                            }
-                        }],
-                        xAxes: [{
-                            stacked: true,
-                            color: 'rgb(255, 255, 255)',
-                            gridLines: {
-                                display: true,
-                                color: "rgba(255,255,255,0.3)"
-
-                            },
-                            scaleLabel: {
-                                display: true,
-                                labelString: 'Date',
-                                fontColor: 'rgb(255, 255, 255)',
-                                fontSize: 14
-                            },
-                            ticks: {
-                                fontColor: 'rgb(255, 255, 255)', // this here
-                            }
-                        }]
-                    }
-                }
-            });
-
-            window.chartColors = {
-                red: 'rgb(255, 99, 132)',
-                orange: 'rgb(255, 159, 64)',
-                yellow: 'rgb(255, 205, 86)',
-                green: 'rgb(75, 192, 192)',
-                blue: 'rgb(54, 162, 235)',
-                purple: 'rgb(153, 102, 255)',
-                grey: 'rgb(201, 203, 207)'
-            };
-        }
 
         function bindAutoComplete() {
 
