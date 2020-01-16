@@ -1,0 +1,45 @@
+
+#plane div, .tall:before, .tall:after{
+  width:1em;
+  height:1em;
+}
+#plane{
+  width:10em;
+  height:10em;
+  margin:0 auto;
+  position:relative;
+  top:.25em;
+  background:darkcyan;
+  box-shadow:.25em .25em 1em rgba(0,0,0,.2);
+  transform:rotatex(45deg) rotateZ(45deg) translateZ(-1em);
+  transform-style: preserve-3d;
+  
+}
+#plane div{
+  float:left;
+  background:#f6f6f6;
+  transform-origin: 97% 97%;
+  position:relative;
+  box-shadow:.125em .125em .5em rgba(0,0,0,.09);
+}
+
+.tall{
+  background:white !important;
+  transform: translateZ(1em);
+  transform-style: preserve-3d;
+}
+.tall:before, .tall:after{
+  content:"";
+  background:darkcyan;
+  position: absolute;
+  transform-origin: 100% 100%;
+}
+.tall:before{
+  transform:rotateX(-90deg) translateY(1em);
+  box-shadow:inset 0em -.125em .25em rgba(0,0,0,.1);
+}
+
+.tall:after{
+  transform:rotateY(90deg) translateX(1em);
+  box-shadow:inset -.125em 0em .25em rgba(0,0,0,.1);
+}
