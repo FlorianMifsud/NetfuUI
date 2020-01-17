@@ -449,7 +449,7 @@ function Ctrl($scope, $timeout)
 
                 $scope.vieRestante = ((b.InfosPerso.LP / b.InfosPerso.LPmax) * 100).toFixed(0);
                 $scope.exp = (((b.InfosPerso.XP - b.InfosPerso.XPlow) / (b.InfosPerso.XPhigh - b.InfosPerso.XPlow)) * 100).toFixed(0);
-                $scope.energie =  ((b.InfosPerso.Energye / b.InfosPerso.EnergyMax) * 100).toFixed(0);
+                $scope.energie =  ((b.InfosPerso.Energy / b.InfosPerso.EnergyMax) * 100).toFixed(0);
             }
 
             if (b.map != null) {
