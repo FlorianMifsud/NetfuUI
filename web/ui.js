@@ -379,7 +379,6 @@ $(document).ready(function () {
         if (speed < 350 && bot().config.mitm == false)
         {
             alert("Baisser la vitesse en dessous de 350 en mode socket (sans dofus d'ouvert) peut provoquer un ban automatique");
-            speed = 350;
         }
 
         NetfuLauncher.setVitesseCombat(currentAccount, speed);
